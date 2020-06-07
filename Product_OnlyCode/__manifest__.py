@@ -13,6 +13,7 @@
     ],
     "depends": [
         "base",
+        "product",
     ],
     "application": False,
     "installable": True,
