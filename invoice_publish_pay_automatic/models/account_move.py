@@ -17,15 +17,21 @@ class AccountMovePublishPayAutomatic(models.Model):
     def write(self, vals):
         res = super(AccountMovePublishPayAutomatic, self).write(vals)
         if vals.get('is_external_published'):
-            if (self.is_external_published==True):
+            if (self.is_external_published==True) and (self.state!="posted"):
                 self.post()
 
         if vals.get('is_external_paid'):
-            if (self.is_external_paid==True):
+            if (self.is_external_paid==True) and (self.invoice_payment_state!="paid"):
                 self.invoice_payment_state="paid"
 
-    #@api.model
-    #def create(self, vals):
-    #    vals.update({'x_Guid':uuid.uuid1()})
-    #    res = super(ResParnterUpdate, self).create(vals)
-    #    return res
+    @api.model
+    def create(self, vals):
+        is_external_published = vals.get('is_external_published',False)
+        is_external_paid = vals.get('is_external_paid',False)
+        if (is_external_published==True):
+            vals.update({'state':'posted'})
+        if (is_external_paid==True):
+            vals.update({'invoice_payment_state':'paid'})
+
+        res = super(AccountMovePublishPayAutomatic, self).create(vals)
+        return res
