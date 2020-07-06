@@ -22,4 +22,10 @@ class AccountMovePublishPayAutomatic(models.Model):
 
         if vals.get('is_external_paid'):
             if (self.is_external_paid==True):
-                self.env['account.payment'].with_context(active_ids=self.ids, active_model='account.move', active_id=self.id).post()
+                self.invoice_payment_state="paid"
+
+    #@api.model
+    #def create(self, vals):
+    #    vals.update({'x_Guid':uuid.uuid1()})
+    #    res = super(ResParnterUpdate, self).create(vals)
+    #    return res
