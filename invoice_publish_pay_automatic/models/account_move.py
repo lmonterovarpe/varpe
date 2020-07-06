@@ -23,15 +23,3 @@ class AccountMovePublishPayAutomatic(models.Model):
         if vals.get('is_external_paid'):
             if (self.is_external_paid==True) and (self.invoice_payment_state!="paid"):
                 self.invoice_payment_state="paid"
-
-    @api.model
-    def create(self, vals):
-        is_external_published = vals.get('is_external_published',False)
-        is_external_paid = vals.get('is_external_paid',False)
-        if (is_external_published==True):
-            vals.update({'state':'posted'})
-        if (is_external_paid==True):
-            vals.update({'invoice_payment_state':'paid'})
-
-        res = super(AccountMovePublishPayAutomatic, self).create(vals)
-        return res
