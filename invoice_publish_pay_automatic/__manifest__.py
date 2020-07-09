@@ -13,6 +13,7 @@
     ],
     "depends": [
         "base",
+        "sale",
         "account"
     ],
     "application": False,
