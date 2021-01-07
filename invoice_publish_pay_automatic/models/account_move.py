@@ -52,3 +52,5 @@ class AccountMovePublishPayAutomatic(models.Model):
         if vals.get('is_external_paid'):
             if (self.is_external_paid==True) and (self.invoice_payment_state!="paid"):
                 self.invoice_payment_state="paid"
+                self.amount_residual=0
+                self.amount_residual_signed=0
