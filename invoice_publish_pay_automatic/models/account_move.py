@@ -54,3 +54,6 @@ class AccountMovePublishPayAutomatic(models.Model):
                 self.invoice_payment_state="paid"
                 self.amount_residual=0
                 self.amount_residual_signed=0
+                lineas=self.env["account.move.line"].search([('move_id','=',self.id)])
+                for linea in lineas:
+                    linea.amount_residual=0
