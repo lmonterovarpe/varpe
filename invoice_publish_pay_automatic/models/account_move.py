@@ -25,6 +25,22 @@ class AccountMovePublishPayAutomatic(models.Model):
         string='Payment', store=True, readonly=True, copy=False, tracking=False,
         compute='_compute_amount')
 
+
+    def _get_creation_message(self):
+        # OVERRIDE
+        if not self.is_invoice(include_receipts=True):
+            return super()._get_creation_message()
+        return {
+            'out_invoice': _(''),
+            'out_refund': _(''),
+            'in_invoice': _(''),
+            'in_refund': _(''),
+            'out_receipt': _(''),
+            'in_receipt': _(''),
+        }[self.type]
+
+
+
     #Al modificar una factura, si el campo is_external_published se publicará
     #Al modificar una factura, si el campo is_external_paid se pagará
     def write(self, vals):
