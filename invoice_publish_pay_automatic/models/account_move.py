@@ -18,6 +18,13 @@ class AccountMovePublishPayAutomatic(models.Model):
         ], string='Status', required=True, readonly=True, copy=False, tracking=False,
         default='draft')
 
+    invoice_payment_state = fields.Selection(selection=[
+        ('not_paid', 'Not Paid'),
+        ('in_payment', 'In Payment'),
+        ('paid', 'Paid')],
+        string='Payment', store=True, readonly=True, copy=False, tracking=False,
+        compute='_compute_amount')
+
     #Al modificar una factura, si el campo is_external_published se publicará
     #Al modificar una factura, si el campo is_external_paid se pagará
     def write(self, vals):
