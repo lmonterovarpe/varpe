@@ -11,6 +11,12 @@ class AccountMovePublishPayAutomatic(models.Model):
 
     is_external_paid = fields.Boolean(string="Pagada", )
 
+    state = fields.Selection(selection=[
+            ('draft', 'Draft'),
+            ('posted', 'Posted'),
+            ('cancel', 'Cancelled')
+        ], string='Status', required=True, readonly=True, copy=False, tracking=False,
+        default='draft')
 
     #Al modificar una factura, si el campo is_external_published se publicará
     #Al modificar una factura, si el campo is_external_paid se pagará
